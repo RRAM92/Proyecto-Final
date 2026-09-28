@@ -45,9 +45,36 @@ create table dato_proyectado(
 	constraint uq_simulacion_variable_year unique (id_simulacion, id_variable, anio)
 );
 
+CREATE TABLE relacion_causal(
+	id_rcausa int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	id_variable_afectada int NOT NULL REFERENCES variable(id_variable),
+	id_variable_influyente int NOT NULL REFERENCES variable(id_variable),
+	id_variable_influyente_2 int references variable(id_variable),
+	tipo VARCHAR(6) NOT NULL CHECK (tipo IN ('input', 'output')),
+	coeficiente NUMERIC(20, 12) NOT null,
+	tiene_nv_propio BOOLEAN not null default false
+);
+
+create table relacion_auxiliar(
+	id_raux int generated always as identity primary key,
+	id_variable_auxiliar int not null references variable(id_variable),
+	id_variable_base int not null references variable(id_variable),
+	coeficiente numeric(20, 12) not null
+);
+
+create table tabla_lookup(
+	id_lookup int generated always as identity primary key,
+	id_variable_nv int not null references variable(id_variable),
+	id_variable_con int not null references variable(id_variable),
+	umbral_max numeric(20, 10),
+	tasa numeric(12, 8) not null,
+	orden int not null
+);
+
 select table_name
 from information_schema.tables
 where table_schema = 'public'
 order by table_name desc;
 
 alter table dato_proyectado add column valor numeric(18,4) not null;
+alter table variable add column if not exists valor_max numeric(20,10);
