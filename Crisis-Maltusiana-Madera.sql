@@ -33,5 +33,6 @@ select exec_simulacion(1, 2026, 2100) as crisis_maltusiana_madera;
 
 select d.anio, v.nombre as variable, d.valor, v.unidad_medida from dato_proyectado d
 join variable v on d.id_variable = v.id_variable
-where d.id_simulacion = (select max(id_simulacion) from simulacion)
+where d.id_simulacion = 3
 order by d.anio, v.id_variable;
+
