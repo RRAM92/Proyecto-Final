@@ -15,8 +15,8 @@ begin
 	values (p_id_escenario, p_year_inicio, p_year_fin)
 	returning id_simulacion into v_id_simulacion;
 
-	create temp table if not exists estado_actual(id_variable int primary key, valor numeric(20,10)) on commit drop;
-	create temp table if not exists estado_nuevo(id_variable int primary key, valor numeric(20,10)) on commit drop;
+	create temp table if not exists estado_actual(id_variable int primary key, valor numeric(30,10)) on commit drop;
+	create temp table if not exists estado_nuevo(id_variable int primary key, valor numeric(30,10)) on commit drop;
 
 	delete from estado_actual;
 	insert into estado_actual(id_variable, valor)
